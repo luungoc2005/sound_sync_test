@@ -23,6 +23,7 @@ export class Channel {
   connectedClients = [];
   io = null;
   namespace = null;
+  active = false;
 
   constructor(io, name) {
     const id = Uuid.v4();
@@ -42,6 +43,7 @@ export class Channel {
 
   handleMasterConnection = (socket) => {
     const address = socket.handshake.address;
+    this.active = true;
     console.log(`[socket.io] New connection to channel ${this.id} from : ${address}`);
 
     socket.on(eventTypes.action, data => {
@@ -54,6 +56,11 @@ export class Channel {
         this.handleError(err);
       }
     })
+
+    socket.on('disconnect', () => {
+      console.log(`[socket.io] Lost master connection to channel ${this.id} from : ${address}`);
+      this.active = false;
+    })
   }
 
   handleMasterMessage = (action) => {
@@ -65,7 +72,6 @@ export class Channel {
         this.media.handleMessage(action);
         this.namespace.emit(eventTypes.action, {
           ...data,
-          position: this.media.getPosition(),
         });
       }
     }

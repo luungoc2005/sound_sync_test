@@ -4,11 +4,15 @@ import { listener } from '../app';
 const router = Router();
 
 router.get('/', (req, res) => {
-  res.json(listener.getChannels().map(channel => ({
-    name: channel.name,
-    id: channel.id,
-    status: channel.getStatus(),
-  })));
+  res.json(
+    listener.getChannels()
+      .filter(channel => channel.active)
+      .map(channel => ({
+        name: channel.name,
+        id: channel.id,
+        status: channel.getStatus(),
+      }))
+  );
 });
 
 router.post('/create', (req, res) => {
