@@ -2,6 +2,7 @@ import Uuid from 'uuid';
 import nanoid from 'nanoid';
 import actionTypes from './actionTypes';
 import { MEDIA_STATUS, MEDIA_ACTIONS } from './media';
+import konsole from '../utils/konsole';
 
 export const toHHMMSS = function (input) {
   let sec_num = parseInt(input, 10); // don't forget the second param
@@ -44,7 +45,7 @@ export class Channel {
   handleMasterConnection = (socket) => {
     const address = socket.handshake.address;
     this.active = true;
-    console.log(`[socket.io] New connection to channel ${this.id} from : ${address}`);
+    konsole.log(`[socket.io] New connection to channel ${this.id} from : ${address}`);
 
     socket.on(eventTypes.action, data => {
       try {
@@ -58,7 +59,7 @@ export class Channel {
     })
 
     socket.on('disconnect', () => {
-      console.log(`[socket.io] Lost master connection to channel ${this.id} from : ${address}`);
+      konsole.log(`[socket.io] Lost master connection to channel ${this.id} from : ${address}`);
       this.active = false;
     })
   }
@@ -66,7 +67,7 @@ export class Channel {
   handleMasterMessage = (action) => {
     if (this.namespace) {
       const { token, ...data } = action;
-      console.log(`Master action`, action);
+      konsole.log(`Master action`, action);
 
       if (this.media) {
         this.media.handleMessage(action);
@@ -89,7 +90,7 @@ export class Channel {
 
   handleClientConnection = (socket) => {
     const address = socket.handshake.address;
-    console.log(`[socket.io] New client connected to channel ${this.id} from : ${address}`);
+    konsole.log(`[socket.io] New client connected to channel ${this.id} from : ${address}`);
     
     if (this.media) {
       if (this.media.status === MEDIA_STATUS.PLAYING) {
@@ -115,5 +116,5 @@ export class Channel {
     }
   }
 
-  handleError = (err) => console.error(`[socket.io] Error in channel ${this.id}: ${err}`);
+  handleError = (err) => konsole.error(`[socket.io] Error in channel ${this.id}: ${err}`);
 }

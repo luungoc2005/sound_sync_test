@@ -3,6 +3,7 @@ import router from './routes';
 import boom from 'express-boom';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import konsole from './utils/konsole';
 import { createSocketListener } from './sockets';
 
 dotenv.config();
@@ -18,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', router);
 
 http.listen(3000, () => {
-  console.log('listening on *:3000');
+  konsole.log('listening on *:3000');
 });
 
 export const listener = createSocketListener(http);

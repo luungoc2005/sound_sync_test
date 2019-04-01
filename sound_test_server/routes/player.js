@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { listener } from '../app';
+import konsole from '../utils/konsole';
 import path from 'path';
 import multer from 'multer';
 import Uuid from 'uuid';
@@ -63,7 +64,7 @@ router.post('/start', uploadMedia, (req, res) => {
       ...reqBody,
     }
     channel.media = new Media(reqBody.fileName, metadata);
-    console.log(metadata);
+    konsole.log(metadata);
     res.json({message: 'File uploaded sucessfully'});
   }
 });
@@ -73,7 +74,7 @@ router.get('/download', (req, res) => {
   if (channelId) {
     const channel = listener.getChannels()
       .find(item => item.id === channelId);
-    console.log(channelId);
+    konsole.log(channelId);
     if (channel && channel.media) {
       res.download(channel.media.path);
     }
