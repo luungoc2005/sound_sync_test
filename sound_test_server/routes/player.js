@@ -7,7 +7,7 @@ import Uuid from 'uuid';
 
 import { Media } from '../sockets/media';
 
-const SAVE_DIR = '_tmp'
+const SAVE_DIR = paht.resolve(__dirname, '_tmp');
 const storage = multer.diskStorage({
   destination: function(req, file, callback) {
     callback(null, SAVE_DIR);
