@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', (req, res) => {
   res.json(
     listener.getChannels()
-      .filter(channel => channel.active)
+      // .filter(channel => channel.active)
       .map(channel => ({
         name: channel.name,
         id: channel.id,

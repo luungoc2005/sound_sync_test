@@ -1,12 +1,13 @@
 import SocketIO from 'socket.io';
 import { Channel } from './channel';
+import konsole from '../utils'
 
 export const createSocketListener = (http) => {
   const io = SocketIO(http);
 
   io.on('connection', (socket) => {
     const address = socket.handshake.address;
-    console.log(`[socket.io] New connection from : ${address}`);
+    konsole.log(`[socket.io] New connection from : ${address}`);
   });
 
   let activeChannels = [];
