@@ -8,10 +8,10 @@ import Uuid from 'uuid';
 import { Media } from '../sockets/media';
 
 const SAVE_DIR = path.resolve(__dirname, '_tmp');
+console.log(`Files will be saved into ${SAVE_DIR}`);
+
 const storage = multer.diskStorage({
-  destination: function(req, file, callback) {
-    callback(null, SAVE_DIR);
-  },
+  destination: SAVE_DIR,
   filename: function(req, file, callback) {
       // callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
       callback(null, `${Uuid.v1()}_${file.originalname}`);
