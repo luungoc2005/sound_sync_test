@@ -1,6 +1,6 @@
 import SocketIO from 'socket.io';
 import { Channel } from './channel';
-import konsole from '../utils'
+import konsole from '../utils/konsole';
 
 export const createSocketListener = (http) => {
   const io = SocketIO(http);
