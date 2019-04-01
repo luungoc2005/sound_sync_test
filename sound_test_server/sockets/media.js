@@ -33,8 +33,6 @@ export class Media {
 
     this.position = 0;
     this.startTime = new Date().getTime();
-    this.controller = new PidController();
-    this.controller.setTarget(0);
   }
 
   getPosition = () => {
@@ -45,23 +43,19 @@ export class Media {
     switch (action.type) {
       case MEDIA_ACTIONS.ONPLAY:
         this.status = MEDIA_STATUS.PLAYING;
-        this.controller.reset();
         this.startTime = new Date().getTime();
         this.position = action.position || 0;
         break;
 
       case MEDIA_ACTIONS.ONPAUSE:
         this.status = MEDIA_STATUS.PAUSED;
-        this.controller.reset();
         this.startTime = new Date().getTime();
         this.position = action.position || 0;
         break;
 
       default:
         if (action.position) {
-          const currentPosition = this.getPosition();
-          this.position = currentPosition + this.controller.update(action.position - currentPosition);
-
+          this.position = action.position;
           this.startTime = new Date().getTime();
         }
       break;
