@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon --exec npx babel-node index.js",
     "debug": "nodemon --inspect --exec npx babel-node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "luungoc2005",
   "license": "ISC",
@@ -27,6 +28,10 @@
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
-    "@babel/register": "^7.4.0"
+    "@babel/register": "^7.4.0",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-node-externals": "^1.7.2"
   }
 }
